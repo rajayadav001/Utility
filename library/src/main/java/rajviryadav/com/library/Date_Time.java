@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Date_Time
 {
@@ -305,7 +306,7 @@ public class Date_Time
         {
             e.printStackTrace();
         }
-        if (startdates.before(enddates) || startdates.equals(enddates))
+        if (startdates.before(enddates))
         {
             datecompares = true;
         }
@@ -313,7 +314,133 @@ public class Date_Time
         {
             datecompares = false;
         }
-
         return datecompares;
+    }
+
+    public void daterange_lastfromdatemonth(TextView fromdate, int month)
+    {
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        cal.add(Calendar.MONTH, -month);
+        cal.set(Calendar.DATE, 1);
+        int firstMonth = cal.get(Calendar.MONTH)+1;
+        int firstYear = cal.get(Calendar.YEAR);
+        String firstday,firstmonth;
+
+        if (firstMonth < 10)
+        {
+            firstmonth = "0" + firstMonth;
+        } else {
+            firstmonth = "" + firstMonth;
+        }
+        //fromdate.setText(firstmonth+"-01-"+firstYear);
+        fromdate.setText("01-"+firstmonth+"-"+firstYear);
+
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE)); // changed calendar to cal
+
+        int lastDay = cal.get(Calendar.DAY_OF_MONTH);
+        int lastMonth = cal.get(Calendar.MONTH)+1;
+        int lastYear = cal.get(Calendar.YEAR);
+        String lastday,lastmonth;
+        if (lastDay < 10)
+        {
+            lastday = "0" + lastDay;
+        } else {
+            lastday = "" + lastDay;
+        }
+
+        if (lastMonth < 10)
+        {
+            lastmonth = "0" + lastMonth;
+        } else {
+            lastmonth = "" + lastMonth;
+        }
+        //todate.setText(lastday+"-"+lastmonth+"-"+lastYear);
+    }
+
+    public void daterange_lasttodatemonth(TextView todate)
+    {
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        cal.add(Calendar.MONTH, -1);
+        cal.set(Calendar.DATE, 1);
+        int firstMonth = cal.get(Calendar.MONTH)+1;
+        int firstYear = cal.get(Calendar.YEAR);
+        String firstday,firstmonth;
+
+        if (firstMonth < 10)
+        {
+            firstmonth = "0" + firstMonth;
+        } else {
+            firstmonth = "" + firstMonth;
+        }
+        //fromdate.setText("01-"+firstmonth+"-"+firstYear);
+
+        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE)); // changed calendar to cal
+
+        int lastDay = cal.get(Calendar.DAY_OF_MONTH);
+        int lastMonth = cal.get(Calendar.MONTH)+1;
+        int lastYear = cal.get(Calendar.YEAR);
+        String lastday,lastmonth;
+        if (lastDay < 10)
+        {
+            lastday = "0" + lastDay;
+        } else {
+            lastday = "" + lastDay;
+        }
+
+        if (lastMonth < 10)
+        {
+            lastmonth = "0" + lastMonth;
+        } else {
+            lastmonth = "" + lastMonth;
+        }
+        todate.setText(lastday+"-"+lastmonth+"-"+lastYear);
+    }
+
+    public void daterange_currentmonth(TextView fromdate, TextView todate)
+    {
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        String day,month;
+        if (currentDay < 10)
+        {
+            day = "0" + currentDay;
+        } else {
+            day = "" + currentDay;
+        }
+
+        if (currentMonth < 10)
+        {
+            month = "0" + currentMonth;
+        } else {
+            month = "" + currentMonth;
+        }
+
+        fromdate.setText("01-"+month+"-"+currentYear);
+        todate.setText(day+"-"+month+"-"+currentYear);
+    }
+
+    public void daterange_financialyear(TextView fromdate, TextView todate, int fromyear,int toyear)
+    {
+        int CurrentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int CurrentMonth = (Calendar.getInstance().get(Calendar.MONTH)+1);
+        String financiyalYearFrom="";
+        String financiyalYearTo="";
+        if (CurrentMonth<4)
+        {
+            financiyalYearFrom="01-04-"+(CurrentYear-fromyear);
+            financiyalYearTo="31-03-"+(CurrentYear-toyear);
+            fromdate.setText(""+financiyalYearFrom);
+            todate.setText(""+financiyalYearTo);
+        }
+        else
+        {
+            financiyalYearFrom="01-04-"+(CurrentYear);
+            financiyalYearTo="31-03-"+(CurrentYear+1);
+            fromdate.setText(""+financiyalYearFrom);
+            todate.setText(""+financiyalYearTo);
+        }
     }
 }
