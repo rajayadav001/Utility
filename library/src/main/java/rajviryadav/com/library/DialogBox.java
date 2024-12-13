@@ -127,7 +127,7 @@ public class DialogBox
         dialog.show();
     }
     
-    public static void dialog_with_action(Context context, String msg, DialogBoxHandler handler)
+    public static void dialog_with_action(Context context, String msg, Boolean btnOk,Boolean btnCancel,Boolean btnSubmit,String btnOkName,String btnCancelName,String btnSubmitName, DialogBoxHandler handler)
     {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -136,19 +136,61 @@ public class DialogBox
 
         TextView text = (TextView) dialog.findViewById(R.id.tab_title);
         Button btn_ok = (Button) dialog.findViewById(R.id.btn_ok);
+        btn_ok.setText(btnOkName);
         Button btn_cancel = (Button) dialog.findViewById(R.id.btncancel);
+        btn_cancel.setText(btnCancelName);
         Button btn_submit = (Button) dialog.findViewById(R.id.btnsubmit);
-        btn_ok.setVisibility(View.INVISIBLE);
-        btn_cancel.setVisibility(View.VISIBLE);
-        btn_submit.setVisibility(View.VISIBLE);
+        btn_submit.setText(btnSubmitName);
+        if(btnOk)
+        {
+            btn_ok.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            btn_ok.setVisibility(View.GONE);
+        }
+
+        if(btnCancel)
+        {
+            btn_cancel.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            btn_cancel.setVisibility(View.GONE);
+        }
+
+        if(btnSubmit)
+        {
+            btn_submit.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            btn_submit.setVisibility(View.GONE);
+        }
+
+        if(btnOk == true && btnCancel==false && btnSubmit==false)
+        {
+            btn_ok.setVisibility(View.VISIBLE);
+            btn_cancel.setVisibility(View.INVISIBLE);
+            btn_submit.setVisibility(View.INVISIBLE);
+        }
 
         text.setText(msg);
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                handler.onOk();
+                dialog.dismiss();
+            }
+        });
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                handler.onDecline();
+                handler.onCancel();
                 dialog.dismiss();
             }
         });

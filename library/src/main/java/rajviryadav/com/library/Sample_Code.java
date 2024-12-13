@@ -1,13 +1,18 @@
 package rajviryadav.com.library;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.util.Base64;
 import android.util.Log;
@@ -18,6 +23,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -26,6 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -38,8 +45,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
 
 public class Sample_Code
 {
@@ -105,7 +118,27 @@ public class Sample_Code
         StrictMode.setThreadPolicy(policy);*/
 
     // sample code of spinner item selected Listener
-    /*logintype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+    /*
+    if(strtskcategoryList.contains(TypeOfCategory_c))
+                        {
+                            tskcategoryindex = strtskcategoryList.indexOf(TypeOfCategory_c);
+                        }
+                        else
+                        {
+                            tskcategoryindex=0;
+                        }
+                        ArrayAdapter<String> adaptermgt = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, strtskcategoryList);
+                        adaptermgt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spntskcategory.setAdapter(adaptermgt);
+                        if(tskcategoryindex ==0)
+                        {
+                            spntskcategory.setSelection(0);
+                        }
+                        else
+                        {
+                            spntskcategory.setSelection(tskcategoryindex);
+                        }
+    logintype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View arg1, int position, long arg3)
@@ -128,6 +161,145 @@ public class Sample_Code
 
         }
     });*/
+
+    /*private void SalesReps()
+    {
+        class GetJSON extends AsyncTask<Void, Void, Response>
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                loading4 = ProgressDialog.show(getActivity(), "", "Please wait...", false, false);
+            }
+
+            @Override
+            protected Response doInBackground(Void... params)
+            {
+                Log.d("TAG_SalesReps", "doInBackground: "+Config.URL_SalesReps);
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .hostnameVerifier(new HostnameVerifier() {
+                            @Override
+                            public boolean verify(String hostname, SSLSession session) {
+                                HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+                                return true;
+                            }
+                        })
+                        .connectTimeout(100, TimeUnit.SECONDS)
+                        .readTimeout(100, TimeUnit.SECONDS).build();
+                MediaType mediaType = MediaType.parse("text/plain");
+                RequestBody body = RequestBody.create(mediaType, "");
+                Request request = new Request.Builder()
+                        .url(Config.URL_SalesReps)
+                        .method("GET", null)
+                        //.addHeader("Authorization", "Basic Y3M6dGVpbWFuYWdlcg==")
+                        .addHeader("Authorization", AppStatus.getInstance(getActivity()).getB(strusername,strpassword))
+                        .build();
+                Response response = null;
+                try
+                {
+                    response = client.newCall(request).execute();
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException(e);
+                }
+                return response;
+            }
+
+            @Override
+            protected void onPostExecute(Response s)
+            {
+                super.onPostExecute(s);
+                loading4.dismiss();
+                srtPrimarySalesPersonarrayList.clear();
+                srtPrimarySalesPersonarrayListone.clear();
+                PrimarySalesPersonarrayList_index=0;
+                try {
+                    Response response = s;
+                    String r = response.body().string();
+                    Log.d("TAG_r_SalesReps", "onPostExecute: "+r);
+                    if (response.code() == 200)
+                    {
+
+                        JSONObject json = new JSONObject(r);
+                        JSONArray contacts = json.getJSONArray("value");
+                        PrimarySalesPersonarrayList = new ArrayList<Model_PrimarySalesPerson>();
+
+                        // looping through All Contacts
+                        for (int i = 0; i < contacts.length(); i++)
+                        {
+                            JSONObject c = contacts.getJSONObject(i);
+
+                            String name = c.optString("Name");
+                            String code = c.optString("SalesRepCode");
+                            PrimarySalesPersonarrayList.add(new Model_PrimarySalesPerson(name, code));
+                            srtPrimarySalesPersonarrayList.add(name);
+                            srtPrimarySalesPersonarrayListone.add(code);
+                        }
+
+                        srtPrimarySalesPersonarrayList.add(0,"Select Primary Sales Person");
+
+                        if(srtPrimarySalesPersonarrayListone.contains(SalesRepCodes))
+                        {
+                            PrimarySalesPersonarrayList_index = srtPrimarySalesPersonarrayListone.indexOf(SalesRepCodes);
+                            //facilityTypes_simple.remove(ShortChar04);
+                            //facilityTypes_simple.add(1,ShortChar04);
+                            Log.d("facilityInformation2", "onSuccess: "+PrimarySalesPersonarrayList_index+"-"+SalesRepCodes);
+                        }
+
+                        ArrayAdapter<String> adapteraircraft = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, srtPrimarySalesPersonarrayList);
+                        adapteraircraft.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spnPrimarySalesPerson.setAdapter(adapteraircraft);
+                        if(PrimarySalesPersonarrayList_index >=0)
+                        {
+                            spnPrimarySalesPerson.setSelection(PrimarySalesPersonarrayList_index+1);
+                        }
+                        else
+                        {
+                            spnPrimarySalesPerson.setSelection(0);
+                        }
+                        spnPrimarySalesPerson.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                        {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View arg1, int position, long arg3)
+                            {
+                                if(parent.getItemAtPosition(position).equals("Select Primary Sales Person"))
+                                {
+                                    PrimarySalesPersonName="";
+                                    PrimarySalesPersonCode="";
+                                }
+                                else
+                                {
+                                    PrimarySalesPersonCode = PrimarySalesPersonarrayList.get(position-1).getCode();
+                                    PrimarySalesPersonName = PrimarySalesPersonarrayList.get(position-1).getName();
+                                    Log.d("PrimarySalesPerson", "onItemSelected: "+PrimarySalesPersonName+"-"+PrimarySalesPersonCode);
+                                    //QuFacName();
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> arg0)
+                            {
+
+                            }
+                        });
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Response Code : " + s.code(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (IOException | JSONException e)
+                {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }*/
 
     // sample code of double back click exit
     /*    // dashboad
@@ -235,6 +407,17 @@ public class Sample_Code
     /*private ArrayList<Model_Line_List> arrayList;
     arrayList = new ArrayList<Model_Line_List>();
     arrayList.add(new Model_Line_List("",""));*/
+
+    // arraylist simple
+    /*ArrayList<String> strtskcategoryList=null;
+    strtskcategoryList=new ArrayList<>();
+    strtskcategoryList.add(0,"Select TKS Category");
+        strtskcategoryList.add(1,"A");
+        strtskcategoryList.add(2,"B");
+        strtskcategoryList.add(3,"C");
+        strtskcategoryList.add(4,"D");
+        strtskcategoryList.add(5,"D+");
+        strtskcategoryList.add(6,"E");*/
 
     // listview
     // java code
@@ -703,11 +886,37 @@ public class Sample_Code
     }
 });*/
 
+/*    txt_quantity.addTextChangedListener(new TextWatcher()
+{
+    @Override
+    public void afterTextChanged(Editable s) {}
+    @Override
+    public void beforeTextChanged(CharSequence s, int start,
+    int count, int after) {
+}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count)
+    {
+        if(s.length() != 0)
+        {
+            int a = Integer.parseInt(txt_quantity.getText().toString().trim());
+            int b = Integer.parseInt(txt_cost.getText().toString().trim());
+            int c = a*b;
+            txt_total_amount.setText(""+c);
+        }
+        else
+        {
+
+        }
+    }
+});*/
+
     // jsondata parse
     /*Response response = s;
     String r = response.body().string();
     JSONObject jsonObject = new JSONObject(r);
     String PartNums = jsonObject.optString("PartNum");
+    JSONArray jsonArray = new JSONArray(r);
     JSONArray contacts = jsonObject.getJSONArray("value");
     for (int i = 0; i < contacts.length(); i++)
     {
@@ -722,4 +931,125 @@ public class Sample_Code
 
     RequestBody body = RequestBody.create(mediaType, jsonParams.toString()); //with RequestBody
     StringEntity entity = new StringEntity(jsonParams.toString());*/ // with StringEntity
+
+    //okhttpclient service
+    /*private void SaveRecord()
+    {
+        class GetJSON extends AsyncTask<Void, Void, Response>
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+                loading1 = ProgressDialog.show(getActivity(), "", "Please wait...", false, false);
+            }
+
+            @Override
+            protected Response doInBackground(Void... params)
+            {
+                Log.d("TAG_URL", "doInBackground: "+Config.URL_Quotesupdate);
+                OkHttpClient client = new OkHttpClient.Builder().hostnameVerifier(new HostnameVerifier() {
+                            @Override
+                            public boolean verify(String hostname, SSLSession session) {
+                                HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+                                return true;
+                            }
+                        })
+                        .connectTimeout(100, TimeUnit.SECONDS)
+                        .readTimeout(100, TimeUnit.SECONDS).build();
+                MediaType mediaType = MediaType.parse("application/json");
+
+                try {
+                    JSONObject jsonParams = new JSONObject();
+                    jsonParams.put("QuoteNum", quotenum.getText().toString().trim());
+                    jsonParams.put("PONum", ponum.getText().toString().trim());
+
+                    //StringEntity entity = new StringEntity(jsonParams.toString());
+                    RequestBody body = RequestBody.create(mediaType, jsonParams.toString());
+
+                    Request request = new Request.Builder().url(Config.URL_Quotesupdate).method("POST", body)
+                            .addHeader("Authorization", AppStatus.getInstance(getActivity()).getB(strusername,strpassword))
+                            .addHeader("Content-Type", "application/json").build();
+                    Response response = null;
+                    response = client.newCall(request).execute();
+
+                    return response;
+                } catch (JSONException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Response s)
+            {
+                super.onPostExecute(s);
+                loading1.dismiss();
+                try {
+                    Response response = s;
+                    String r = response.body().string();
+                    Log.d("TAG_r_Competitor", "onPostExecute: "+r);
+                    if (response.code() == 200)
+                    {
+                        Toast.makeText(getActivity(),"Successfully Save....",Toast.LENGTH_LONG).show();
+                        Fragment newFragment = new Quotes_Details();
+                        Bundle args = new Bundle();
+                        args.putString("QuoteNum",QuoteNum);
+                        newFragment.setArguments(args);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.content, newFragment);
+                        fragmentTransaction.commit();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Response Code : " + s.code(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }*/
+
+    //Handler
+    /*    new Handler().postDelayed(new Runnable()
+{
+    @Override
+    public void run()
+    {
+
+    }
+},5000);*/
+
+    // Get Image
+    /*    // for camera
+    //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+    // for gallery
+    //Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+
+    //startActivityForResult(intent,100);
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+//    {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode==RESULT_OK)
+//        {
+//            if(requestCode==100)
+//            {
+//                // for camera
+//                //Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                //imageView.setImageBitmap(bitmap);
+//
+//                //for gallery
+//                //imageView.setImageURI(data.getData());
+//            }
+//        }
+//    }*/
+
 }

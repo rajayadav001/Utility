@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("Welcome");
         FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
         xfragmentTransaction.replace(R.id.content,new Dashboard()).commit();
+
     }
 
     @Override

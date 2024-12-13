@@ -37,7 +37,6 @@ public class WebPage
 
             public void onPageFinished(WebView view, String url)
             {
-
                 progressDialog.dismiss();
             }
 

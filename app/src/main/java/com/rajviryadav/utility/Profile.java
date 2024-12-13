@@ -1,6 +1,8 @@
 package com.rajviryadav.utility;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +32,15 @@ public class Profile extends Fragment
         toolbar.setTitle("Welcome to Profile");
         if(Internet.isConnected(getActivity()))
         {
-            Toast.abctoast(getActivity(),"Profile....");
+            Toast.toast_simple(getActivity(),"Profile....");
         }
         else
         {
-            Toast.abctoast(getActivity(),"Internet Connection is required....");
+            Toast.toast_simple(getActivity(),"Internet Connection is required....");
         }
 
         //DialogBox.dialog_with_action(getActivity(),"Hello");
+
         return main;
     }
 }

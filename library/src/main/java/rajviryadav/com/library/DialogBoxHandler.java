@@ -9,5 +9,6 @@ import java.util.ArrayList;
 public abstract class DialogBoxHandler
 {
     public abstract void onConfirmation();
-    public abstract void onDecline();
+    public abstract void onCancel();
+    public abstract void onOk();
 }

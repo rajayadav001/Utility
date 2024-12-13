@@ -1,14 +1,23 @@
 package com.rajviryadav.utility;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -16,6 +25,7 @@ import android.widget.TextView;
  */
 public class Dashboard extends Fragment
 {
+    ImageView imageView;
     public Dashboard() {
         // Required empty public constructor
     }
@@ -26,8 +36,37 @@ public class Dashboard extends Fragment
         View main = inflater.inflate(R.layout.fragment_dashboard, container, false);
         Toolbar toolbar =(Toolbar) ((MainActivity) this.getActivity()).findViewById(R.id.toolbar);
         toolbar.setTitle("Welcome to Dashboard");
+        imageView = main.findViewById(R.id.img);
         TextView text = main.findViewById(R.id.text);
         WebView webView = main.findViewById(R.id.webView);
+        text.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+            @Override
+            public void onClick(View view) {
+                //Date_Time.select_datetime(getActivity(),text);
+                /*DialogBox.dialog_with_action(getActivity(), "hello",true,false,false,"Ok","Cancel","Update", new DialogBoxHandler() {
+                    @Override
+                    public void onConfirmation() {
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onOk() {
+
+                    }
+                });*/
+
+              Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+              startActivityForResult(intent,100);
+
+            }
+        });
+
         /*if(Internet.isConnected(getActivity()))
         {
             Toast.abctoast(getActivity(),"Hello....");
@@ -78,7 +117,25 @@ public class Dashboard extends Fragment
 //        DialogBox.dialog_with_action(getActivity(),"Hello", new Profile(),fragmentManager);
 
 
-
+        //Toast.toast_custom(getActivity(),"Hello India India India",R.drawable.ic_menu_camera,R.color.green,R.color.yellow);
+        //Toast.toast_custom(getActivity(),"India ininini ininiiinni",R.drawable.ic_menu_gallery,R.color.yellow,1,R.color.green,R.color.blue);
+        //Toast.toast_custom(getActivity(),"Hello",1,R.drawable.ic_menu_manage,R.color.black,R.color.white,R.color.white,20);
         return main;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK)
+        {
+            if(requestCode==100)
+            {
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                imageView.setImageBitmap(bitmap);
+
+                imageView.setImageURI(data.getData());
+            }
+        }
     }
 }
