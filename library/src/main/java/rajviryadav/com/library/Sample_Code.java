@@ -2,11 +2,17 @@ package rajviryadav.com.library;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -34,6 +40,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -1051,5 +1058,72 @@ public class Sample_Code
 //            }
 //        }
 //    }*/
+
+    // Notification
+    /*<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    private static final String CHANNEL_ID = "update";
+    private static final int NOTIFICATION_ID = 100;
+    private static final int REQUEST_CODE = 110;
+
+    Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.basic,null);
+    BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+    Bitmap bitmap = bitmapDrawable.getBitmap();
+
+    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    Notification notification;
+
+    Notification.BigPictureStyle bigPictureStyle = new Notification.BigPictureStyle()
+            .bigPicture(bitmap)
+            .setBigContentTitle("Hello Hello")
+            .setSummaryText("README. Help people interested in this repository understand your project by adding a README.");
+    Notification.InboxStyle inboxStyle = new Notification.InboxStyle()
+            .addLine("A")
+            .addLine("A")
+            .addLine("A")
+            .addLine("A")
+            .addLine("A")
+            .setBigContentTitle("Hello Hello")
+            .setSummaryText("Help people interested in this repository understand your project by adding a README. Help people interested in this repository understand your project by adding a README.");
+
+    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),REQUEST_CODE,intent,PendingIntent.FLAG_MUTABLE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+    {
+        notification = new Notification.Builder(getApplicationContext())
+                .setLargeIcon(bitmap)
+                .setSmallIcon(R.drawable.cs_logo)
+                .setContentTitle("Utility")
+                //.setSubText("Update")
+                .setContentText("Help people interested in this repository understand your project by adding a README.")
+                .setChannelId(CHANNEL_ID)
+                .setContentIntent(pendingIntent)
+                .setStyle(bigPictureStyle)
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .build();
+        notificationManager.createNotificationChannel(new NotificationChannel(CHANNEL_ID,"update", NotificationManager.IMPORTANCE_HIGH));
+
+    }
+        else
+    {
+        notification = new Notification.Builder(getApplicationContext())
+                .setLargeIcon(bitmap)
+                .setSmallIcon(R.drawable.cs_logo)
+                .setContentTitle("Utility")
+                //.setSubText("Update")
+                .setContentText("Help people interested in this repository understand your project by adding a README.")
+                .setContentIntent(pendingIntent)
+                .setStyle(bigPictureStyle)
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .build();
+    }
+
+        notificationManager.notify(NOTIFICATION_ID,notification);*/
+
 
 }

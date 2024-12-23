@@ -1,15 +1,23 @@
 package com.rajviryadav.utility;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.NOTIFICATION_SERVICE;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -120,6 +128,8 @@ public class Dashboard extends Fragment
         //Toast.toast_custom(getActivity(),"Hello India India India",R.drawable.ic_menu_camera,R.color.green,R.color.yellow);
         //Toast.toast_custom(getActivity(),"India ininini ininiiinni",R.drawable.ic_menu_gallery,R.color.yellow,1,R.color.green,R.color.blue);
         //Toast.toast_custom(getActivity(),"Hello",1,R.drawable.ic_menu_manage,R.color.black,R.color.white,R.color.white,20);
+
+
         return main;
     }
 
