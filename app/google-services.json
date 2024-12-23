@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "703793555122",
+    "project_id": "utility-463c1",
+    "storage_bucket": "utility-463c1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703793555122:android:539e2f21e25f9e3a734bab",
+        "android_client_info": {
+          "package_name": "com.rajviryadav.utility"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYIwH6V8DnXILs31lbz6_Iv-YIHVoUMnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

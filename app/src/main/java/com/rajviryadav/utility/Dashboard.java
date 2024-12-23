@@ -1,32 +1,24 @@
 package com.rajviryadav.utility;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.NOTIFICATION_SERVICE;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import rajviryadav.com.library.Notifications;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,8 +61,10 @@ public class Dashboard extends Fragment
                     }
                 });*/
 
-              Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
-              startActivityForResult(intent,100);
+//              Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+//              startActivityForResult(intent,100);
+
+                Notifications.showNotification(getActivity(),100,"update","update","Hello India","India is a large country....",R.drawable.cs_logo,true,R.drawable.basic,new Intent(getActivity(),MainActivity.class),110);
 
             }
         });
