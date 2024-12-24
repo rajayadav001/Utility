@@ -32,11 +32,11 @@ public class Profile extends Fragment
         toolbar.setTitle("Welcome to Profile");
         if(Internet.isConnected(getActivity()))
         {
-            Toast.toast_simple(getActivity(),"Profile....");
+            Toast.toast_short(getActivity(),"Profile....");
         }
         else
         {
-            Toast.toast_simple(getActivity(),"Internet Connection is required....");
+            Toast.toast_long(getActivity(),"Internet Connection is required....");
         }
 
         //DialogBox.dialog_with_action(getActivity(),"Hello");

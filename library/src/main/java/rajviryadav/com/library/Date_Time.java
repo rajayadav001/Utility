@@ -19,6 +19,47 @@ import java.util.TimeZone;
 
 public class Date_Time
 {
+
+    /*
+    d single digit date e.g. 5
+    dd double digit date e.g. 05
+    M single digit month e.g. 1
+    MM double digit month e.g. 01
+    MMM three-letter abbreviation for month e.g. Jan
+    MMMM month spelled out in full e.g. January
+    yy double digit year eLg. 13
+    УУУУ four digit year e.g. 2013
+
+    h single digit hours in 12 hour format e.g. 9
+    hh double digit hours in 12 hour format e.g. 09
+    H single digit hours in 24 hour format e.g. 9PM as 21
+    HH double digit hours in 24 hour format e.g. 9PM as 21
+    m single digit mints e.g. 9
+    mm double digit mints e.g. 09
+    S single digit seconds e.g. 9
+    SS double digit seconds e.g. 09
+    a am/pm marker
+
+    G   Era designator (before christ, after christ)
+    y   Year (e.g. 12 or 2012). Use either yy or yyyy.
+    M   Month in year. Number of M's determine length of format (e.g. MM, MMM or MMMMM)
+    d   Day in month. Number of d's determine length of format (e.g. d or dd)
+    h   Hour of day, 1-12 (AM / PM) (normally hh)
+    H   Hour of day, 0-23 (normally HH)
+    m   Minute in hour, 0-59 (normally mm)
+    s   Second in minute, 0-59 (normally ss)
+    S   Millisecond in second, 0-999 (normally SSS)
+    E   Day in week (e.g Monday, Tuesday etc.)
+    D   Day in year (1-366)
+    F   Day of week in month (e.g. 1st Thursday of December)
+    w   Week in year (1-53)
+    W   Week in month (0-5)
+    a   AM / PM marker
+    k   Hour in day (1-24, unlike HH's 0-23)
+    K   Hour in day, AM / PM (0-11)
+    z   Time Zone
+    */
+
     String set_day,set_year,set_month1,set_month2;
     public static void select_date(Context context, TextView textView)
     {
