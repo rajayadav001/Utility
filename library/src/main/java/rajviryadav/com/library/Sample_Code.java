@@ -38,6 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
@@ -893,7 +894,7 @@ public class Sample_Code
     }
 });*/
 
-/*    txt_quantity.addTextChangedListener(new TextWatcher()
+    /*    txt_quantity.addTextChangedListener(new TextWatcher()
 {
     @Override
     public void afterTextChanged(Editable s) {}
@@ -918,7 +919,7 @@ public class Sample_Code
     }
 });*/
 
-    // jsondata parse
+    // json data parse
     /*Response response = s;
     String r = response.body().string();
     JSONObject jsonObject = new JSONObject(r);
@@ -1125,5 +1126,39 @@ public class Sample_Code
 
         notificationManager.notify(NOTIFICATION_ID,notification);*/
 
+    // Firebase message
+    /*
+    1. apply plugin: 'com.google.gms.google-services'
+       implementation platform('com.google.firebase:firebase-bom:33.2.0')
+       implementation("com.google.firebase:firebase-analytics")
+       implementation 'com.google.firebase:firebase-messaging:24.0.1'
 
+    2. classpath 'com.google.gms:google-services:4.3.15'
+
+    3.
+    <service
+    android:name=".FirebaseMsgService"
+    android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+    </service>
+
+    4. FirebaseMessaging.getInstance().subscribeToTopic("update");
+
+    5.
+    public class FirebaseMsgService extends FirebaseMessagingService
+    {
+        private static final String CHANNEL_ID = "update";
+        private static final int NOTIFICATION_ID = 100;
+        private static final int REQUEST_CODE = 110;
+
+        @Override
+        public void onMessageReceived(@NonNull RemoteMessage message)
+        {
+            super.onMessageReceived(message);
+            Log.d("TAG_message", "onMessageReceived: "+message.getNotification().getTitle()+"---"+message.getNotification().getBody());
+            Notifications.showNotification(getBaseContext(),100,"update","update",message.getNotification().getTitle(),message.getNotification().getBody(),R.drawable.cs_logo,false);
+        }
+    }*/
 }

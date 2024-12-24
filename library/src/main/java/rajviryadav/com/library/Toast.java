@@ -17,9 +17,13 @@ import androidx.core.content.ContextCompat;
 
 public class Toast
 {
-    public static void toast_simple(Context context, String message)
+    public static void toast_short(Context context, String message)
     {
         android.widget.Toast.makeText(context, ""+message, android.widget.Toast.LENGTH_SHORT).show();
+    }
+    public static void toast_long(Context context, String message)
+    {
+        android.widget.Toast.makeText(context, ""+message, android.widget.Toast.LENGTH_LONG).show();
     }
 
     public static void toast_custom(Context context, String message,int duration, int icon)

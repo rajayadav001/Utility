@@ -1,7 +1,10 @@
 package com.rajviryadav.utility;
 
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.POST_NOTIFICATIONS;
 import static android.app.Activity.RESULT_OK;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +20,12 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
+
+import java.util.ArrayList;
 
 import rajviryadav.com.library.Notifications;
 
@@ -38,6 +47,26 @@ public class Dashboard extends Fragment
         toolbar.setTitle("Welcome to Dashboard");
         imageView = main.findViewById(R.id.img);
         TextView text = main.findViewById(R.id.text);
+
+        String[] permissions = {POST_NOTIFICATIONS};
+        //String rationale = "Please provide Notification permission.";
+        Permissions.Options options = new Permissions.Options()
+                .setRationaleDialogTitle("Info")
+                .setSettingsDialogTitle("Warning");
+        Permissions.check(getActivity(), permissions, "", options, new PermissionHandler()
+        {
+            @Override
+            public void onGranted()
+            {
+
+            }
+
+            @Override
+            public void onDenied(Context context, ArrayList<String> deniedPermissions)
+            {
+                Toast.makeText(getActivity(),"Without permission you can't received Notification ....",Toast.LENGTH_LONG).show();
+            }
+        });
         WebView webView = main.findViewById(R.id.webView);
         text.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)

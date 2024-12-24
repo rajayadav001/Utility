@@ -85,7 +85,7 @@ public class DialogBox
         dialog.show();
     }
 
-    public static void dialog_with_action(Context context, String msg, Fragment fragment,FragmentManager fragmentManager)
+/*    public static void dialog_with_action(Context context, String msg, Fragment fragment,FragmentManager fragmentManager)
     {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -114,18 +114,18 @@ public class DialogBox
             @Override
             public void onClick(View v)
             {
-                Bundle args = new Bundle();
-                args.putString("backtype", "");
-                fragment.setArguments(args);
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content, fragment);
-                fragmentTransaction.commit();
+//                Bundle args = new Bundle();
+//                args.putString("backtype", "");
+//                fragment.setArguments(args);
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.content, fragment);
+//                fragmentTransaction.commit();
                 dialog.dismiss();
             }
         });
 
         dialog.show();
-    }
+    }*/
     
     public static void dialog_with_action(Context context, String msg, Boolean btnOk,Boolean btnCancel,Boolean btnSubmit,String btnOkName,String btnCancelName,String btnSubmitName, DialogBoxHandler handler)
     {
