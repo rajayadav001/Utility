@@ -33,7 +33,7 @@ android {
 }
 
 group = 'rajviryadav.com.library'
-version = '1.0.3'
+version = '1.0.4'
 
 afterEvaluate {
     publishing {
@@ -43,7 +43,7 @@ afterEvaluate {
 
                 groupId = 'rajviryadav.com.library'
                 artifactId = 'library'
-                version = '1.0.3'
+                version = '1.0.4'
             }
         }
     }

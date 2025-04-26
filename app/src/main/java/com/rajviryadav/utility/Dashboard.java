@@ -22,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nabinbhandari.android.permissions.PermissionHandler;
-import com.nabinbhandari.android.permissions.Permissions;
 
 import java.util.ArrayList;
 
@@ -49,24 +47,6 @@ public class Dashboard extends Fragment
         TextView text = main.findViewById(R.id.text);
 
         String[] permissions = {POST_NOTIFICATIONS};
-        //String rationale = "Please provide Notification permission.";
-        Permissions.Options options = new Permissions.Options()
-                .setRationaleDialogTitle("Info")
-                .setSettingsDialogTitle("Warning");
-        Permissions.check(getActivity(), permissions, "", options, new PermissionHandler()
-        {
-            @Override
-            public void onGranted()
-            {
-
-            }
-
-            @Override
-            public void onDenied(Context context, ArrayList<String> deniedPermissions)
-            {
-                Toast.makeText(getActivity(),"Without permission you can't received Notification ....",Toast.LENGTH_LONG).show();
-            }
-        });
         WebView webView = main.findViewById(R.id.webView);
         text.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
